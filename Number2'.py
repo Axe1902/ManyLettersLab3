@@ -14,7 +14,7 @@ print("Выберете какие две вершины вы хотите от�
 peak1 = int(input())
 peak2 = int(input())
 
-Operations.identification_peak_for_line(line_data, peak1, peak2)
+Operations.identification_peak_for_line(line_data, peak1, peak2, n)
 
 for i in range(n):
     if (i == peak2-1):

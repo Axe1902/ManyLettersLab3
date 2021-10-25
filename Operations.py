@@ -10,10 +10,10 @@ def identification_peak(graph, peak1, peak2, n):
         for j in range(n):
             if (graph[peak1-1][j] != graph[j][peak1-1]):
                 graph[j][peak1 - 1] = graph[peak1-1][j]
-    disconnect_peak(graph, peak2)
+    disconnect_peak(graph, peak2-1)
 
 
-def identification_peak_for_line(line_data, peak1, peak2):
+def identification_peak_for_line(line_data, peak1, peak2, n):
     m = len(line_data[peak2 - 1])
     for i in range(len(line_data[peak1-1])):
         for j in range(m):
@@ -21,7 +21,10 @@ def identification_peak_for_line(line_data, peak1, peak2):
                 del line_data[peak2-1][j]
                 m -= 1
                 break
-    line_data[peak1-1].append(line_data[peak2-1])
+    for i in range(len(line_data[peak2-1])):
+        line_data[peak1-1].append(line_data[peak2-1][i])
+    disconnect_peak_for_line(line_data, peak2, n)
+    connect_peak_for_line(line_data, peak1, peak2)
 
 
 def contraction_edge(graph, peak1, peak2, n):
@@ -44,7 +47,7 @@ def contraction_edge(graph, peak1, peak2, n):
                     if (graph[peak1 - 1][j] != graph[j][peak1 - 1]):
                         graph[j][peak1 - 1] = graph[peak1 - 1][j]
             graph[peak1-1][peak1-1] = 0
-            disconnect_peak(graph, peak2)
+            disconnect_peak(graph, peak2-1)
             running = False
 
 
@@ -103,31 +106,21 @@ def copy_peak_for_line(line_data, peak, n):
 
 
 def unification_graphs(graph1, graph2, same_peak):
-    if same_peak == 1:
-        for i in range(len(graph2) - 1):
-            a = []
-            for j in range(len(graph1)):
-                a.append(0)
-            graph1.append(a)
-            for j in range(len(graph1)):
-                graph1[j].append(0)
-
-        for i in range(len(graph2)):
-            for j in range(len(graph2), len(graph1)):
-                if graph1[len(graph2) + i][j] == 0:
-                    graph1[len(graph2) + i][j] += graph2[i][j - len(graph2)]
-    else:
+    n = len(graph1)
+    for i in range(len(graph2) - same_peak):
         a = []
-        for i in range(len(graph1)):
+        for j in range(len(graph1)):
             a.append(0)
         graph1.append(a)
-        for i in range(len(graph1)):
-            graph1[i].append(0)
+        for j in range(len(graph1)):
+            graph1[j].append(0)
 
-        for i in range(len(graph2)):
-            for j in range(len(graph2) - 1, len(graph1)):
-                if graph1[same_peak + i][j] == 0:
-                    graph1[same_peak + i][j] += graph2[i][j - same_peak]
+    for i in range(len(graph2)):
+        k = 0
+        for j in range((n) - same_peak, len(graph1)):
+            if graph1[(n) - same_peak + i][j] == 0:
+                graph1[n - same_peak + i][j] += graph2[i][k]
+            k += 1
 
 
 def crossroads_graphs(graph1, graph2, graph3, n):
@@ -135,24 +128,30 @@ def crossroads_graphs(graph1, graph2, graph3, n):
         for j in range(n):
             if graph1[i][j] == 1 and graph2[i][j] == 1:
                 graph3[i][j] = 1
+    zero_peak = []
+    for i in range(len(graph3)):
+        if sum(graph3[i]) == 0:
+            zero_peak.append(i)
+
+    for i in range(len(zero_peak)):
+        disconnect_peak(graph3, zero_peak[i])
+        if i != len(zero_peak) - 1:
+           zero_peak[i + 1] -= (1 + i)
 
 
 def circle_sum_graphs(graph1, graph2, graph3, n):
+    for i in range(len(graph3)):
+        if len(graph1) > len(graph2):
+            graph3[i][len(graph1)-1] = graph1[i][len(graph1)-1]
+        else:
+            graph3[i][len(graph2) - 1] = graph2[i][len(graph2) - 1]
+
     for i in range(n):
         for j in range(n):
             if graph1[i][j] == 1 or graph2[i][j] == 1:
                 graph3[i][j] = 1
             if graph1[i][j] == 1 and graph2[i][j] == 1:
                 graph3[i][j] = 0
-    zero_peak = []
-    for i in range(n):
-        if sum(graph3[i]) == 0:
-            zero_peak.append(i)
-
-    for i in range(len(zero_peak)):
-        disconnect_peak(graph3, zero_peak[i])
-        if i != len(zero_peak)-1:
-            zero_peak[i+1] -= (1 + i)
 
 
 def disconnect_peak(graph, peak):
@@ -180,7 +179,7 @@ def disconnect_peak_for_line(line_data, peak, n):
 def connect_peak_for_line(line_data, peak1, peak2):
     for i in range(len(line_data[peak1-1])):
         for j in range(len(line_data[peak2-1])):
-            if line_data[peak1-1][i][0] == line_data[peak2-1][j][0]:
+            if line_data[peak1-1][i][0] == line_data[peak2-1][j][0] and line_data[peak1-1][i][0] != peak1:
                 for k in range(len(line_data[peak2-1])):
                     if line_data[peak2-1][k][0] == peak1:
                         line_data[line_data[peak1-1][i][0]-1].append(line_data[peak2-1][k])

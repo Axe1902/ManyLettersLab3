@@ -5,12 +5,12 @@ n = 5
 graphA = []
 graphB = []
 
-Graph.generator_matrix(graphA, n)
-Graph.print_matrix(graphA, 0, n)
+Graph.generator_matrix(graphA, 4)
+Graph.print_matrix(graphA, 0, 4)
 print()
 
-Graph.generator_matrix(graphB, n)
-Graph.print_matrix(graphB, 0, n)
+Graph.generator_matrix(graphB, 5)
+Graph.print_matrix(graphB, 0, 5)
 print()
 
 graphC = []
@@ -20,8 +20,8 @@ for i in range(n):
         a.append(0)
     graphC.append(a)
 
-Operations.crossroads_graphs(graphA, graphB, graphC, n)
-Graph.print_matrix(graphC, 0, n)
+Operations.crossroads_graphs(graphA, graphB, graphC, 4)
+Graph.print_matrix(graphC, 0, 5)
 
 
 graphD = []
@@ -35,7 +35,6 @@ Operations.circle_sum_graphs(graphA, graphB, graphD, n)
 Graph.print_matrix(graphD, 0, len(graphD))
 
 
-graphE = []
 graph1 = []
 graph2 = []
 
