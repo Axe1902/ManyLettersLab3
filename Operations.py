@@ -198,3 +198,31 @@ def print_newGraph(graph, peak2, n):
     for i in range(n-1):
         print("%d" % (a[i]), graph[i])
     print()
+
+
+def depth_first_search_matrix(graph, visits, node):
+    print(node+1)
+    visits[node] = 1
+    for j in range(len(graph)):
+        if graph[node][j] == 1 and visits[j] == 0:
+            depth_first_search_matrix(graph, visits, j)
+
+
+def depth_first_search_line(graph, visits, node):
+    print(node+1)
+    visits[node] = 1
+    for j in graph[node]:
+        if visits[j[0]-1] == 0:
+            depth_first_search_line(graph, visits, j[0]-1)
+
+
+def depth_first_search_stack(graph, visits, node):
+    stack = [node]
+    while len(stack) > 0:
+        item = stack.pop()
+        if visits[item] == 0:
+            visits[item] = 1
+            print(item+1)
+            for i in range(len(graph[item])-1, 0, -1):
+                if graph[item][i] == 1:
+                    stack.append(i)
