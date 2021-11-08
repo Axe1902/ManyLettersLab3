@@ -223,6 +223,6 @@ def depth_first_search_stack(graph, visits, node):
         if visits[item] == 0:
             visits[item] = 1
             print(item+1)
-            for i in range(len(graph[item])-1, 0, -1):
+            for i in range(len(graph[item])-1, -1, -1):
                 if graph[item][i] == 1:
                     stack.append(i)
