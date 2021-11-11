@@ -226,3 +226,51 @@ def depth_first_search_stack(graph, visits, node):
             for i in range(len(graph[item])-1, -1, -1):
                 if graph[item][i] == 1:
                     stack.append(i)
+
+
+def bfs_matrix(graph, visits, node):
+    queue = [node]
+    while len(queue) > 0:
+        item = queue.pop(0)
+        visits[item] = 1
+        print(item+1)
+        for i in range(len(graph)):
+            if graph[item][i] == 1 and visits[i] == 0:
+                queue.append(i)
+                visits[i] = 1
+
+
+def bfs_line(graph, visits, node):
+    queue = [node]
+    while len(queue) > 0:
+        item = queue.pop(0)
+        visits[item] = 1
+        print(item+1)
+        for i in graph[item]:
+            if visits[i[0]-1] == 0:
+                queue.append(i[0]-1)
+                visits[i[0]-1] = 1
+
+
+def bfsd_matrix(graph, dist, node):
+    queue = [node]
+    while len(queue) > 0:
+        item = queue.pop(0)
+        dist[node] = 0
+        print(item+1)
+        for i in range(len(graph)):
+            if graph[item][i] == 1 and dist[i] == -1:
+                queue.append(i)
+                dist[i] = dist[item] + 1
+
+
+def bfsd_line(graph, dist, node):
+    queue = [node]
+    while len(queue) > 0:
+        item = queue.pop(0)
+        dist[node] = 0
+        print(item+1)
+        for i in graph[item]:
+            if dist[i[0]-1] == -1:
+                queue.append(i[0]-1)
+                dist[i[0]-1] = dist[item] + 1
