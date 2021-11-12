@@ -24,3 +24,7 @@ print()
 Visits = [0 for _ in range(n)]
 Operations.bfs_line(line, Visits, node-1)
 print()
+
+Visits = [0 for _ in range(n)]
+Operations.bfs_matrix_real(graph, Visits, node-1)
+print()

@@ -1,3 +1,4 @@
+from queue import Queue
 
 def identification_peak(graph, peak1, peak2, n):
     for j in range(n):
@@ -237,6 +238,19 @@ def bfs_matrix(graph, visits, node):
         for i in range(len(graph)):
             if graph[item][i] == 1 and visits[i] == 0:
                 queue.append(i)
+                visits[i] = 1
+
+
+def bfs_matrix_real(graph, visits, node):
+    queue = Queue()
+    queue.add(node)
+    while queue.len != 0:
+        item = queue.pop()
+        visits[item] = 1
+        print(item+1)
+        for i in range(len(graph)):
+            if graph[item][i] == 1 and visits[i] == 0:
+                queue.add(i)
                 visits[i] = 1
 
 
