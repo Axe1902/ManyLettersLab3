@@ -1,4 +1,5 @@
-from queue import Queue
+from MyQueue import Queue
+
 
 def identification_peak(graph, peak1, peak2, n):
     for j in range(n):
@@ -118,8 +119,8 @@ def unification_graphs(graph1, graph2, same_peak):
 
     for i in range(len(graph2)):
         k = 0
-        for j in range((n) - same_peak, len(graph1)):
-            if graph1[(n) - same_peak + i][j] == 0:
+        for j in range(n - same_peak, len(graph1)):
+            if graph1[n - same_peak + i][j] == 0:
                 graph1[n - same_peak + i][j] += graph2[i][k]
             k += 1
 
@@ -276,6 +277,7 @@ def bfsd_matrix(graph, dist, node):
             if graph[item][i] == 1 and dist[i] == -1:
                 queue.append(i)
                 dist[i] = dist[item] + 1
+    print(dist)
 
 
 def bfsd_line(graph, dist, node):
@@ -288,3 +290,28 @@ def bfsd_line(graph, dist, node):
             if dist[i[0]-1] == -1:
                 queue.append(i[0]-1)
                 dist[i[0]-1] = dist[item] + 1
+    print(dist)
+
+
+def dfsd_matrix(graph, dist, node):
+    stack = [node]
+    dist[node] = 0
+    while len(stack) > 0:
+        item = stack.pop()
+        print(item + 1)
+        for i in range(len(graph[item]) - 1, -1, -1):
+            if graph[item][i] == 1 and dist[i] == -1:
+                dist[i] = dist[item] + 1
+                stack.append(i)
+
+
+def dfsd_line(graph, dist, node):
+    stack = [node]
+    while len(stack) > 0:
+        item = stack.pop()
+        dist[node] = 0
+        print(item + 1)
+        for i in range(len(graph[item]) - 1, -1, -1):
+            if graph[item][i][1] == 1 and dist[graph[item][i][0]-1] == -1:
+                dist[graph[item][i][0]-1] = dist[item] + 1
+                stack.append(graph[item][i][0]-1)
