@@ -15,6 +15,18 @@ def generator_matrix(graph, n):
                 graph[j][i] = graph[i][j]
 
 
+def generator_w_matrix(graph, n, maxNumber):
+    for i in range(n):
+        a = [0 for i in range(n)]
+        graph.append(a)
+
+    for i in range(n):
+        for j in range(n):
+            if (graph[i][j] == 0) and (i != j):
+                graph[i][j] = random.randint(0, maxNumber)
+                graph[j][i] = graph[i][j]
+
+
 def generator_line(line_data, graph, n):
     for i in range(n):
         line = []

@@ -280,6 +280,20 @@ def bfsd_matrix(graph, dist, node):
     print(dist)
 
 
+def bfsd_matrix_real(graph, dist, node):
+    queue = Queue()
+    queue.add(node)
+    while queue.len != 0:
+        item = queue.pop()
+        dist[node] = 0
+        print(item+1)
+        for i in range(len(graph)):
+            if graph[item][i] != 0 and dist[i] > dist[item] + graph[item][i]:
+                queue.add(i)
+                dist[i] = dist[item] + graph[item][i]
+    print(dist)
+
+
 def bfsd_line(graph, dist, node):
     queue = [node]
     while len(queue) > 0:
