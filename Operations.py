@@ -294,6 +294,25 @@ def bfsd_matrix_real(graph, dist, node):
     print(dist)
 
 
+def bfsd_incMatrix_real(graph, edge, dist, node):
+    queue = Queue()
+    queue.add(node)
+    while queue.len != 0:
+        item = queue.pop()
+        dist[node] = 0
+        print(item+1)
+        for i in range(len(edge)):
+            if item != edge[i][1]:
+                if graph[item][i] != 0 and dist[edge[i][1]] > dist[item] + graph[item][i]:
+                    queue.add(edge[i][1])
+                    dist[edge[i][1]] = dist[item] + graph[item][i]
+            elif item == edge[i][1]:
+                if graph[item][i] != 0 and dist[edge[i][0]] > dist[item] + graph[item][i]:
+                    queue.add(edge[i][0])
+                    dist[edge[i][0]] = dist[item] + graph[item][i]
+    print(dist)
+
+
 def bfsd_line(graph, dist, node):
     queue = [node]
     while len(queue) > 0:
@@ -329,3 +348,16 @@ def dfsd_line(graph, dist, node):
             if graph[item][i][1] == 1 and dist[graph[item][i][0]-1] == -1:
                 dist[graph[item][i][0]-1] = dist[item] + 1
                 stack.append(graph[item][i][0]-1)
+
+
+def search_peripheral_or_central_node(eccentricity, property, massOfNode):
+    for i in range(len(eccentricity)):
+        if eccentricity[i] == property:
+            massOfNode.append(i+1)
+
+
+def degree_of_node(graph, degrees, n):
+    for i in range(n):
+        for j in range(n):
+            if graph[i][j] != 0:
+                degrees[i] += 1
