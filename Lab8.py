@@ -5,12 +5,12 @@ n = int(input("Введите размер матрицы: "))
 
 graph = []
 Graph.generator_w_matrix(graph, n, 3)
-# graph = [[0, 2, 3, 0, 0, 1],
+# graph = [[0, 2, 3, 0, 0, 0],
 #          [2, 0, 0, 5, 0, 0],
 #          [3, 0, 0, 0, 1, 0],
 #          [0, 5, 0, 0, 0, 0],
 #          [0, 0, 1, 0, 0, 0],
-#          [1, 0, 0, 0, 0, 0]]
+#          [0, 0, 0, 0, 0, 0]]
 Graph.print_matrix(graph, 0, n)
 
 eccentricity = []
@@ -18,6 +18,9 @@ for i in range(n):
     Dist = [1000 for _ in range(n)]
     Operations.bfsd_matrix_real(graph, Dist, i)
     print()
+    for j in range(n):
+        if Dist[j] == 1000:
+            Dist[j] = 0
     eccentricity.append(max(Dist))
 
 print("Эксцентриситет: ", eccentricity)
@@ -62,6 +65,9 @@ for i in range(n):
     Dist = [1000 for _ in range(n)]
     Operations.bfsd_incMatrix_real(incGraph, edge, Dist, i)
     print()
+    for j in range(n):
+        if Dist[j] == 1000:
+            Dist[j] = 0
     eccentricityInc.append(max(Dist))
 
 print("Эксцентриситет: ", eccentricityInc)
